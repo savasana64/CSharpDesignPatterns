@@ -6,8 +6,8 @@ namespace DotNetDesignPatternDemos.SOLID.LiskovSubstitutionPrinciple
     public class Rectangle
     {
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public virtual int Width { get; set; }
+        public virtual int Height { get; set; }
 
         public Rectangle()
         {
@@ -37,6 +37,16 @@ namespace DotNetDesignPatternDemos.SOLID.LiskovSubstitutionPrinciple
         //{ 
         //  set { base.Width = base.Height = value; }
         //}
+
+        public override int Width 
+        {
+            set { base.Width = base.Height = value; }
+        }
+
+        public override int Height
+        {
+            set { base.Width = base.Height = value; }
+        }
     }
 
         public class Demo
