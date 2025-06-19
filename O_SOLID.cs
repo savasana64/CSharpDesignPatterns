@@ -93,6 +93,24 @@ namespace DotNetDesignPatternDemos.SOLID.OCP
         }
     }
 
+    // combinator
+    public class AndSpecification<T> : ISpecification<T>
+    {
+        private ISpecification<T> first, second;
+
+        public AndSpecification(ISpecification<T> first, ISpecification<T> second)
+        {
+            this.first = first ?? throw new ArgumentNullException(paramName: nameof(first));
+            this.second = second ?? throw new ArgumentNullException(paramName: nameof(second));
+        }
+
+        public bool IsSatisfied(Product p)
+        {
+            return first.IsSatisfied(p) && second.IsSatisfied(p);
+        }
+    }
+
+
     public class BetterFilter : IFilter<Product>
     {
         public IEnumerable<Product> Filter(IEnumerable<Product> items, ISpecification<Product> spec)
@@ -127,7 +145,13 @@ namespace DotNetDesignPatternDemos.SOLID.OCP
             foreach (var p in bf.Filter(products, new SizeSpecification(Size.Large)))
                 WriteLine($" - {p.Name} is large");
 
-
+            WriteLine("Large blue items");
+            foreach (var p in bf.Filter(products,
+              new AndSpecification<Product>(new ColorSpecification(Color.Blue), new SizeSpecification(Size.Large)))
+            )
+            {
+                WriteLine($" - {p.Name} is big and blue");
+            }
         }
     }
 }
