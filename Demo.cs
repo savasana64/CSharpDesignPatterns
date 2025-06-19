@@ -24,6 +24,22 @@ namespace DotNetDesignPatternDemos.SOLID.SRP
         {
             return string.Join(Environment.NewLine, entries);
         }
+
+            // breaks single responsibility principle
+        public void Save(string filename, bool overwrite = false)
+        {
+            File.WriteAllText(filename, ToString());
+        }
+
+        public void Load(string filename)
+        {
+
+        }
+
+        public void Load(Uri uri)
+        {
+
+        }
     }
 public class Demo
 {
@@ -32,7 +48,7 @@ public class Demo
           var j = new Journal();
           j.AddEntry("I cried today");
           j.AddEntry("I ate a bug");
-          WriteLine("Demo");
+          WriteLine(j);
    }
   }
 }
